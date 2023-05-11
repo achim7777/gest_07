@@ -27,7 +27,7 @@ class EnseignantController extends AbstractController
     {
         $enseignant = $paginator->paginate(
             $repository->findAll(),
-            $request->query->getInt('page', 1), 12
+            $request->query->getInt('page', 1), 10
         );
         return $this->render('enseignant/index.html.twig', [
             'enseignant' => $enseignant
@@ -104,6 +104,11 @@ class EnseignantController extends AbstractController
         ]);
     }
 
+    /**
+     * @param EntityManagerInterface $manager
+     * @param Enseignant $enseignant
+     * @return Response
+     */
     #[Route('/enseignant/delete/{id}', name: 'app_enseignant_delete',
         methods: ['GET'])]
     public function delete(EntityManagerInterface $manager,

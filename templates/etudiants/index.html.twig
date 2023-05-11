@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Etudiant{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1>Erudiants liste</h1>
+
+        <a href="{{ path('app_etudiant_new') }}"
+           class="btn btn-primary">Créer un etudiant</a>
+
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success mt-4">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        {# total items count #}
+        <h6 class="count mt-4">
+            Il y a
+            {{ etudiant.getTotalItemCount }}
+            etudiants en total
+        </h6>
+
+        <table class="table table-hover">
+            <thead>
+            <tr class="table-secondary">
+                <th scope="col">Numero</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Prenomt</th>
+                <th scope="col">CNE</th>
+                <th scope="col">Email</th>
+                <th scope="col">Adress</th>
+                <th scope="col">Edition</th>
+                <th scope="col">Supresion</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for etudiant in etudiant %}
+                <tr class="table-info">
+                    <td>{{ etudiant.id }}</td>
+                    <td>{{ etudiant.nom }}</td>
+                    <td>{{ etudiant.prenom }}</td>
+                    <td>{{ etudiant.cne }}</td>
+                    <td>{{ etudiant.email }}</td>
+                    <td>{{ etudiant.adress }}</td>
+                    <td>
+                        <a href="{{ path('app_etudiant_edit',
+                            { id: etudiant.id }) }}" class="btn btn-info">Modifier</a>
+                    </td>
+                    <td>
+                        <a href="{{ path('app_etudiant_delete',
+                            { id: etudiant.id }) }}" class="btn btn-danger">Suprimer</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {# display navigation #}
+        <div class="navigation d-flex justify-content-center mt-4">
+            {{ knp_pagination_render(etudiant) }}
+        </div>
+    </div>
+{% endblock %}
