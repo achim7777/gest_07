@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Enseignant{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1>Enseignants liste</h1>
+
+        <a href="{{ path('app_enseignant_new') }}"
+           class="btn btn-primary">Créer un enseignant</a>
+
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success mt-4">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        {# total items count #}
+        <h6 class="count mt-4">
+            Il y a
+            {{ enseignant.getTotalItemCount }}
+            enseignants en total
+        </h6>
+
+        <table class="table table-hover">
+            <thead>
+            <tr class="table-secondary">
+                <th scope="col">Numero</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Prenomt</th>
+                <th scope="col">CIN</th>
+                <th scope="col">Email</th>
+                <th scope="col">Adress</th>
+                <th scope="col">Edition</th>
+                <th scope="col">Supresion</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for enseignant in enseignant %}
+                <tr class="table-info">
+                    <td>{{ enseignant.id }}</td>
+                    <td>{{ enseignant.nom }}</td>
+                    <td>{{ enseignant.prenom }}</td>
+                    <td>{{ enseignant.cin }}</td>
+                    <td>{{ enseignant.email }}</td>
+                    <td>{{ enseignant.adress }}</td>
+                    <td>
+                        <a href="{{ path('app_enseignant_edit',
+                            { id: enseignant.id }) }}" class="btn btn-info">Modifier</a>
+                    </td>
+                    <td>
+                        <a href="{{ path('app_enseignant_delete',
+                            { id: enseignant.id }) }}" class="btn btn-danger">Suprimer</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {# display navigation #}
+        <div class="navigation d-flex justify-content-center mt-4">
+            {{ knp_pagination_render(enseignant) }}
+        </div>
+    </div>
+{% endblock %}
